@@ -1,9 +1,6 @@
 import express from 'express';
 import authRoute from './auth.route';
 import userRoute from './user.route';
-import writerRoute from './writer.route';
-import bookRoute from './book.route';
-import listsRoute from './lists.route';
 import docsRoute from './docs.route';
 import config from '../../config/config';
 
@@ -17,18 +14,6 @@ const defaultRoutes = [
   {
     path: '/users',
     route: userRoute,
-  },
-  {
-    path: '/writers',
-    route: writerRoute,
-  },
-  {
-    path: '/books',
-    route: bookRoute,
-  },
-  {
-    path: '/lists',
-    route: listsRoute,
   },
 ];
 
