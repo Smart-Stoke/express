@@ -1,17 +1,15 @@
+import { UserDocument } from 'documents/user.document';
+import { UserDto } from 'dto/user.dto';
 import httpStatus from 'http-status';
+import { ObjectId } from 'mongoose';
 import { User } from '../models';
 import ApiError from '../utils/ApiError';
 
-/**
- * Create a user
- * @param {Object} userBody
- * @returns {Promise<User>}
- */
-const createUser = async (userBody) => {
-  if (await User.isEmailTaken(userBody.email)) {
+const createUser = async (user: UserDto): Promise<UserDocument> => {
+  if (await User.isEmailTaken(user.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  return User.create(userBody);
+  return User.create(user);
 };
 
 /**
@@ -33,7 +31,7 @@ const queryUsers = async (filter, options) => {
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
-const getUserById = async (id) => {
+const getUserById = async (id: ObjectId) => {
   return User.findById(id);
 };
 
@@ -42,7 +40,7 @@ const getUserById = async (id) => {
  * @param {string} email
  * @returns {Promise<User>}
  */
-const getUserByEmail = async (email) => {
+const getUserByEmail = async (email: string) => {
   return User.findOne({ email });
 };
 
@@ -52,7 +50,7 @@ const getUserByEmail = async (email) => {
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-const updateUserById = async (userId, updateBody) => {
+const updateUserById = async (userId: ObjectId, updateBody) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -70,7 +68,7 @@ const updateUserById = async (userId, updateBody) => {
  * @param {ObjectId} userId
  * @returns {Promise<User>}
  */
-const deleteUserById = async (userId) => {
+const deleteUserById = async (userId: ObjectId) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');

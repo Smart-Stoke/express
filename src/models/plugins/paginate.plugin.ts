@@ -1,5 +1,16 @@
 /* eslint-disable no-param-reassign */
 
+import { BaseDocument } from 'documents/base.document';
+import { FilterQuery, QueryOptions } from 'mongoose';
+
+export type QueryResult = {
+  results: BaseDocument[];
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalResults: number;
+};
+
 const paginate = (schema) => {
   /**
    * @typedef {Object} QueryResult
@@ -19,7 +30,8 @@ const paginate = (schema) => {
    * @param {number} [options.page] - Current page (default = 1)
    * @returns {Promise<QueryResult>}
    */
-  schema.statics.paginate = async function (filter, options) {
+
+  schema.statics.paginate = async function <T>(filter: FilterQuery<T>, options: QueryOptions): Promise<QueryResult> {
     let sort = '';
     if (options.sortBy) {
       const sortingCriteria = [];
@@ -32,7 +44,7 @@ const paginate = (schema) => {
       sort = 'createdAt';
     }
 
-    const limit = options.limit && parseInt(options.limit, 10) > 0 ? parseInt(options.limit, 10) : 10;
+    const limit = options.limit && parseInt(options.limit.toString(), 10) > 0 ? parseInt(options.limit.toString(), 10) : 10;
     const page = options.page && parseInt(options.page, 10) > 0 ? parseInt(options.page, 10) : 1;
     const skip = (page - 1) * limit;
 
@@ -40,7 +52,7 @@ const paginate = (schema) => {
     let docsPromise = this.find(filter).sort(sort).skip(skip).limit(limit);
 
     if (options.populate) {
-      options.populate.split(',').forEach((populateOption) => {
+      (options.populate as any).split(',').forEach((populateOption) => {
         docsPromise = docsPromise.populate(
           populateOption
             .split('.')

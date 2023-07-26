@@ -1,4 +1,4 @@
-import { RoleType } from 'types/Role.type';
+import { RoleType } from 'types/role.type';
 import { BaseDocument } from './base.document';
 
 export interface UserDocument extends BaseDocument {

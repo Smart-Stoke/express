@@ -3,10 +3,13 @@ import pick from '../utils/pick';
 import ApiError from '../utils/ApiError';
 import catchAsync from '../utils/catchAsync';
 import { userService } from '../services';
+import { UserDto } from '../dto/user.dto';
+import { Response, Request } from 'express';
 
-const createUser = catchAsync(async (req, res) => {
+const createUser = catchAsync(async (req: Request, res: Response<UserDto>): Promise<void> => {
   const user = await userService.createUser(req.body);
-  res.status(httpStatus.CREATED).send(user);
+  const dtoUser = UserDto.convertDocToDto(user);
+  res.status(httpStatus.CREATED).send(dtoUser);
 });
 
 const getUsers = catchAsync(async (req, res) => {

@@ -1,25 +1,17 @@
-import mongoose, { Model, ObjectId } from 'mongoose';
+import mongoose, { FilterQuery, Model, ObjectId, QueryOptions } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import { toJSON, paginate } from './plugins';
 import { roles } from '../config/roles';
 import { UserDocument } from '../documents/user.document';
+import { QueryResult } from './plugins/paginate.plugin';
 
 interface UserMethods {
   isPasswordMatch(password: string): Promise<boolean>;
 }
 interface UserModel extends Model<UserDocument, {}, UserMethods> {
   isEmailTaken(email: string, excludeUserId?: ObjectId): Promise<boolean>;
-  paginate(
-    filter: any,
-    options: any
-  ): Promise<{
-    results: any;
-    page: number;
-    limit: number;
-    totalPages: number;
-    totalResults: any;
-  }>;
+  paginate(filter: FilterQuery<UserDocument>, options: QueryOptions): Promise<QueryResult>;
 }
 
 const userSchema = new mongoose.Schema<UserDocument, UserModel, UserMethods>(
