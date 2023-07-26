@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "outDir": "bin",
+    "rootDir": "src",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "checkJs": true,
+    "allowJs": true,
+    "moduleResolution": "node",
+    "lib": ["ES2022"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowUnreachableCode": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "useUnknownInCatchVariables": false,
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "alwaysStrict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "noImplicitThis": false,
+    "resolveJsonModule": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "ts-node": {
+    // Tell ts-node CLI to install the --loader automatically
+    "esm": true,
+    "compilerOptions": { "module": "ES2022" }
+  },
+  "include": ["src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules", "<node_internals>/**"]
+}
