@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema<UserDocument, UserModel, UserMethods>(
     role: {
       type: String,
       enum: roles,
-      default: 'salesAdmin',
+      default: 'user',
     },
     isEmailVerified: {
       type: Boolean,
