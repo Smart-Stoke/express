@@ -1,1 +1,1 @@
-export type RoleType = 'admin' | 'subAdmin' | 'salesAdmin';
+export type RoleType = 'user' | 'admin';
